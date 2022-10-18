@@ -14,6 +14,11 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+redis:
+  password_secret:
+    name: devcentral-redis
+    key: redis-password
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
