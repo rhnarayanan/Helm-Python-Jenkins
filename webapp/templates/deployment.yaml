@@ -18,6 +18,18 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:          
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:                
+                 name: "{{ .Values.redis.password_secret.name }}"
+                 key:  "{{ .Values.redis.password_secret.key }}"          
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "webapp.fullname" . }}
+                  key: seed
+                  optional: false
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
